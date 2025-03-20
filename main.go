@@ -1,41 +1,44 @@
-package main 
+package main
 
 import (
+	routes "github.com/AvadhutJadhav96/Go-JWT/routes" // Importing route handlers
 	"os"
-
-	"github.com/gin-gonic/gin"   // Importing Gin framework
-	"github.com/AvadhutJadhav96/Go-JWT/routes"              // Importing the routes package
+	"log"
+	"github.com/gin-gonic/gin"       // Gin framework for handling HTTP requests
+	"github.com/joho/godotenv"       // Package to load environment variables from a .env file
 )
 
 func main() {
-	// Get the PORT environment variable, or default to "8000"
+	// Load environment variables from the .env file
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file") // Log and exit if the .env file cannot be loaded
+	}
+
+	// Get the PORT value from environment variables
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8000"
+		port = "8000" // Default to port 8000 if not specified in .env
 	}
 
 	// Create a new Gin router instance
 	router := gin.New()
+	router.Use(gin.Logger()) // Use Gin's built-in logging middleware
 
-	// Use the Gin Logger middleware to log incoming HTTP requests
-	router.Use(gin.Logger())
-
-	// Register authentication routes (e.g., login, register)
+	// Register authentication and user routes
 	routes.AuthRoutes(router)
-
-	// Register user-related routes (e.g., get user, update user)
 	routes.UserRoutes(router)
 
-	// Define a simple GET endpoint at /api-1
+	// Define a test API endpoint - api-1
 	router.GET("/api-1", func(c *gin.Context) {
 		c.JSON(200, gin.H{"success": "Access granted for api-1"})
 	})
 
-	// Define another GET endpoint at /api-2
+	// Define another test API endpoint - api-2
 	router.GET("/api-2", func(c *gin.Context) {
 		c.JSON(200, gin.H{"success": "Access granted for api-2"})
 	})
 
-	// Start the server and listen on the specified port
-	router.Run(":" + port) // Corrected: `Run` (not `RUN`)
+	// Start the server on the specified port
+	router.Run(":" + port)
 }
