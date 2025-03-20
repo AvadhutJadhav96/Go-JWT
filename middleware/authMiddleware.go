@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	helper "github.com/AvadhutJadhav96/Go-JWT/helpers" // Import helper functions for token validation
 	"github.com/gin-gonic/gin" // Import Gin framework for middleware handling
@@ -14,7 +13,7 @@ func Authenticate() gin.HandlerFunc {
 		clientToken := c.Request.Header.Get("token")
 		if clientToken == "" {
 			// If no token is provided, return an error response
-			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("No Authorization header provided")})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "No Authorization header provided"})
 			c.Abort() // Stop further request processing
 			return
 		}
