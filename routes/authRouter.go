@@ -1,12 +1,15 @@
 package routes
 
-import(
-	"github.com/gin-gonic/gin"
-	"github.com/AvadhutJadhav96/Go-JWT/controllers"              
+import (
+	controller "github.com/AvadhutJadhav96/Go-JWT/controllers" // Import user authentication controllers
+	"github.com/gin-gonic/gin" // Import Gin framework for routing
 )
 
-func AuthRoutes(incomingRoutes *gin.Engine){
-	incomingRoutes.POST("users/signup", controllers.Signup())
-	incomingRoutes.POST("users/login", controllers.Login())
-	//here token for validation is not requried since we have not signed up yet 
+// AuthRoutes defines authentication-related routes for user signup and login.
+func AuthRoutes(incomingRoutes *gin.Engine) {
+	// Route for user signup
+	incomingRoutes.POST("users/signup", controller.Signup())
+
+	// Route for user login
+	incomingRoutes.POST("users/login", controller.Login())
 }
