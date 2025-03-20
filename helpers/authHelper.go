@@ -12,7 +12,7 @@ func CheckUserType(c *gin.Context, role string) (err error) {
 
 	// If the user type does not match the required role, return an error
 	if userType != role {
-		err = errors.New("Unauthorized to access this resource")
+		err = errors.New("unauthorized to access this resource")
 		return err
 	}
 	return err
@@ -26,7 +26,7 @@ func MatchUserTypeToUid(c *gin.Context, userId string) (err error) {
 
 	// If the user is of type "USER" but their ID does not match the provided ID, deny access
 	if userType == "USER" && uid != userId {
-		err = errors.New("Unauthorized to access this resource")
+		err = errors.New("unauthorized to access this resource")
 		return err
 	}
 
